@@ -1,0 +1,18 @@
+[submodule "api-gateway"]
+	path = api-gateway
+	url = https://github.com/bhupesh98/api-gateway.git
+[submodule "frontend"]
+	path = frontend
+	url = https://github.com/bhupesh98/angular-frontend.git
+[submodule "notification-service"]
+	path = notification-service
+	url = https://github.com/bhupesh98/notification-service.git
+[submodule "inventory-service"]
+	path = inventory-service
+	url = https://github.com/bhupesh98/inventory-service.git
+[submodule "order-service"]
+	path = order-service
+	url = https://github.com/bhupesh98/order-service.git
+[submodule "product-service"]
+	path = product-service
+	url = https://github.com/bhupesh98/product-service.git
