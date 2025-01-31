@@ -103,3 +103,44 @@ services:
     depends_on:
       - kafka
       - schema-registry
+
+  loki:
+    image: grafana/loki:main
+    command: [ "-config.file=/etc/loki/local-config.yml" ]
+    ports:
+      - "3100:3100"
+
+  prometheus:
+    image: prom/prometheus:latest
+    command:
+      - --enable-feature=exemplar-storage
+      - --config.file=/etc/prometheus/prometheus.yml
+    volumes:
+      - ./docker/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    ports:
+      - "9090:9090"
+
+  tempo:
+    image: grafana/tempo:latest
+    command: [ "-config=/etc/tempo/local-config.yaml" ]
+    volumes:
+      - ./docker/tempo/tempo.yaml:/etc/tempo/tempo.yaml:ro
+      - ./docker/tempo/tempo-data:/tmp/tempo
+    ports:
+      - "3110:3100" # tempo
+      - "9411:9411" # zipkin
+
+  grafana:
+    image: grafana/grafana:latest
+    volumes:
+      - ./docker/grafana:/etc/grafana/provisioning/datasources:ro
+    environment: # For production use authentication
+      GF_AUTH_ANONYMOUS_ENABLED: true
+      GF_AUTH_ANONYMOUS_ORG_ROLE: Admin
+      GF_AUTH_DISABLE_LOGIN_FORM: true
+    ports:
+      - "3000:3000"
+    depends_on:
+      - prometheus
+      - loki
+      - tempo

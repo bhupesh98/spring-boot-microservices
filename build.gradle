@@ -5,6 +5,8 @@ plugins {
 group = 'com.bhupesh'
 version = '1.0-SNAPSHOT'
 
+description = 'Spring Boot Microservices Project'
+
 repositories {
     mavenCentral()
 }
